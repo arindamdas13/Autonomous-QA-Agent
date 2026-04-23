@@ -1,0 +1,156 @@
+{
+  "name": "JIRA-Create-An-Issue",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is AD. I am your Bug Logger!\nWhat kind of Bug you want to create, tell me the description of your bug. I will create a Bug for you in JIRA.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -512,
+        -80
+      ],
+      "id": "9dfcd7cd-b1de-4699-9a2b-464fd0872213",
+      "name": "When chat message received",
+      "webhookId": "d6dd9bfa-209c-4d6e-9d3f-ec1ca6fafde8",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        128
+      ],
+      "id": "5cdb2c1d-dbf2-4b8c-86f1-69b5df361792",
+      "name": "Google Gemini Chat Model",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": false,
+      "maxTries": 5,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sD4JJ2EKWQrU9zyi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "Add all the details by your own and using your logic and thinking. Use proper format.\nCreate a issue in JIRA with the input bug description. The bug title should be proper and meaningful.\nAdd below sections as a description. Use proper format while adding the details, use proper heading and bullet points wherever required.\nDescription (Add complete overview/description for that issue), Impact Details, RCA, Replicable Steps, Actual Behavior, Expected Behavior, Acceptance Criteria, Environment Details (if user has provided, else no need to add the section), Any other credentials (if user has provided, else no need to add the section)."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -304,
+        -80
+      ],
+      "id": "e8b76980-fd32-439a-b694-cd38221f9871",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "project": {
+          "__rl": true,
+          "value": "10000",
+          "mode": "list",
+          "cachedResultName": "AD Project"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10007",
+          "mode": "list",
+          "cachedResultName": "Bug"
+        },
+        "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}",
+        "additionalFields": {
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "reporter": {
+            "__rl": true,
+            "value": "712020:a490f22f-c517-4f18-854a-d7d3b9943c2d",
+            "mode": "list",
+            "cachedResultName": "ARINDAM DAS"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        128
+      ],
+      "id": "a0bb1dee-dc5b-4ff8-991c-4b3eed827180",
+      "name": "Create an issue in Jira Software",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "gpVAISRFpB84QMfc",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an issue in Jira Software": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "819b9bd8-aaca-4239-90f7-b4b69bc0766d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "313a4737238113f5d3bf94e591eac506b4fb6b41ef56cc6c9f34fd124cc54dfe"
+  },
+  "id": "1k8eGzE56lzYgyQz",
+  "tags": []
+}
