@@ -19,6 +19,9 @@ It transforms raw requirements into traceable test assets and turns ad-hoc issue
 
 ---
 
+<img width="974" height="525" alt="image" src="https://github.com/user-attachments/assets/f939afb4-82b6-4f67-a51a-63389e07f192" />
+
+
 ## Core Tech Stack
 
 | Layer | Technology | Purpose |
