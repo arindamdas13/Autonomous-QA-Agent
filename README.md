@@ -87,7 +87,7 @@ Key outcomes:
 
 ---
 
-## Ongoing Development Goals
+## Ongoing Development Goals:
 
 ### 1. Heuristic Refinement
 
