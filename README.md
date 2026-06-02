@@ -20,7 +20,8 @@ It transforms raw requirements into traceable test assets and turns ad-hoc issue
 ---
 
 <img width="974" height="525" alt="image" src="https://github.com/user-attachments/assets/f939afb4-82b6-4f67-a51a-63389e07f192" />
-<img width="1914" height="914" alt="image" src="https://github.com/user-attachments/assets/58b82de3-54cf-4fe2-9967-8b63715a8e13" />
+<img width="1919" height="923" alt="image" src="https://github.com/user-attachments/assets/0febb401-0570-4cab-bb56-10477b45a1e2" />
+
 
 
 
